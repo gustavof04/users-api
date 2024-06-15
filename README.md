@@ -1,7 +1,5 @@
 # Users API
 
-## Sobre
-
 Api de usuários em NestJS, TypeORM, Postgres e Docker.
 
 ## Instalação
