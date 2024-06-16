@@ -1,6 +1,12 @@
 # Users API
 
-API de usuários em NestJS, TypeORM, Postgres e Docker.
+API de usuários em NestJS, TypeORM e Postgres.
+
+## Arquitetura e Recursos
+* <a href="https://www.macoratti.net/21/05/net_onion1.htm" target="_blank">Onion Architecture</a> e injeção de dependência, garantindo modularidade, testabilidade e desacoplamento;
+* Docker para a containerização do banco de dados;
+* <code>class-validator</code> para as validações de DTOs;
+* Helpers para padronizar status de requisições HTTP.
 
 ## Instalação
 
