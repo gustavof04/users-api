@@ -10,9 +10,8 @@ import {
   Delete,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { UsersService } from './users.service';
-import { CreateUserDTO } from './dtos/CreateUserDTO';
-import { UpdateUserDTO } from './dtos/UpdateUserDTO';
+import { CreateUserDTO } from '../domain/dtos/CreateUserDTO';
+import { UpdateUserDTO } from '../domain/dtos/UpdateUserDTO';
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
@@ -21,18 +20,29 @@ import {
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { Users } from './user.entity';
+import { ICreateUser } from '../domain/useCases/ICreateUser';
+import { IFindUserById } from '../domain/useCases/IFindUserById';
+import { IFindAllUsers } from '../domain/useCases/IFindAllUsers';
+import { IUpdateUser } from '../domain/useCases/IUpdateUser';
+import { IDeleteUser } from '../domain/useCases/IDeleteUser';
+import { Users } from '../domain/entities/user.entity';
 
 @ApiTags('users')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly _createUser: ICreateUser,
+    private readonly _findUserById: IFindUserById,
+    private readonly _findAllUsers: IFindAllUsers,
+    private readonly _updateUser: IUpdateUser,
+    private readonly _deleteUser: IDeleteUser,
+  ) {}
 
   @Get()
   @ApiOkResponse({ type: Users, isArray: true })
   @ApiInternalServerErrorResponse()
   public async GetAll(@Res() response: Response) {
-    const users = await this.usersService.findAllUsers();
+    const users = await this._findAllUsers.Execute();
     return response.status(HttpHelper.StatusCode(users.status)).json(users);
   }
 
@@ -41,7 +51,7 @@ export class UsersController {
   @ApiNotFoundResponse()
   @ApiInternalServerErrorResponse()
   public async GetById(@Res() response: Response, @Param('id') id: string) {
-    const user = await this.usersService.findUserById(id);
+    const user = await this._findUserById.Execute(id);
     return response.status(HttpHelper.StatusCode(user.status)).json(user);
   }
 
@@ -49,11 +59,8 @@ export class UsersController {
   @ApiCreatedResponse({ type: Users })
   @ApiBadRequestResponse()
   @ApiInternalServerErrorResponse()
-  public async Create(
-    @Res() response: Response,
-    @Body() userDTO: CreateUserDTO,
-  ) {
-    const userCreated = await this.usersService.createUser(userDTO);
+  public async Create(@Res() response: Response, @Body() input: CreateUserDTO) {
+    const userCreated = await this._createUser.Execute(input);
     return response
       .status(HttpHelper.StatusCode(userCreated.status))
       .json(userCreated);
@@ -67,9 +74,9 @@ export class UsersController {
   public async Update(
     @Res() response: Response,
     @Param('id') id: string,
-    @Body() userDTO: UpdateUserDTO,
+    @Body() input: UpdateUserDTO,
   ) {
-    const userUpdated = await this.usersService.updateUser(id, userDTO);
+    const userUpdated = await this._updateUser.Execute(id, input);
     return response
       .status(HttpHelper.StatusCode(userUpdated.status))
       .json(userUpdated);
@@ -81,7 +88,7 @@ export class UsersController {
   @ApiBadRequestResponse()
   @ApiInternalServerErrorResponse()
   public async Remove(@Res() response: Response, @Param('id') id: string) {
-    const userDeleted = await this.usersService.deleteUser(id);
+    const userDeleted = await this._deleteUser.Execute(id);
     return response
       .status(HttpHelper.StatusCode(userDeleted.status))
       .json(userDeleted);
