@@ -1,8 +1,18 @@
 import { HttpHelper } from 'shared/helpers/httpResponseHelper';
-import { Controller, Get, Post, Param, Res, Body } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Put,
+  Param,
+  Res,
+  Body,
+  Delete,
+} from '@nestjs/common';
 import { Response } from 'express';
 import { UsersService } from './users.service';
-import { CreateUserDTO } from './dto/users.dto';
+import { CreateUserDTO } from './dtos/CreateUserDTO';
+import { UpdateUserDTO } from './dtos/UpdateUserDTO';
 import {
   ApiBadRequestResponse,
   ApiCreatedResponse,
@@ -44,5 +54,33 @@ export class UsersController {
     return response
       .status(HttpHelper.StatusCode(userCreated.status))
       .json(userCreated);
+  }
+
+  @Put(':id')
+  @ApiOkResponse({ type: Users })
+  @ApiNotFoundResponse()
+  @ApiBadRequestResponse()
+  @ApiInternalServerErrorResponse()
+  async Update(
+    @Res() response: Response,
+    @Param('id') id: string,
+    @Body() userDTO: UpdateUserDTO,
+  ) {
+    const userUpdated = await this.usersService.updateUser(id, userDTO);
+    return response
+      .status(HttpHelper.StatusCode(userUpdated.status))
+      .json(userUpdated);
+  }
+
+  @Delete(':id')
+  @ApiOkResponse({ type: Users })
+  @ApiNotFoundResponse()
+  @ApiBadRequestResponse()
+  @ApiInternalServerErrorResponse()
+  async Remove(@Res() response: Response, @Param('id') id: string) {
+    const userDeleted = await this.usersService.deleteUser(id);
+    return response
+      .status(HttpHelper.StatusCode(userDeleted.status))
+      .json(userDeleted);
   }
 }
