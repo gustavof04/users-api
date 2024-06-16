@@ -31,7 +31,7 @@ export class UsersController {
   @Get()
   @ApiOkResponse({ type: Users, isArray: true })
   @ApiInternalServerErrorResponse()
-  async GetAll(@Res() response: Response) {
+  public async GetAll(@Res() response: Response) {
     const users = await this.usersService.findAllUsers();
     return response.status(HttpHelper.StatusCode(users.status)).json(users);
   }
@@ -40,7 +40,7 @@ export class UsersController {
   @ApiOkResponse({ type: Users })
   @ApiNotFoundResponse()
   @ApiInternalServerErrorResponse()
-  async GetById(@Res() response: Response, @Param('id') id: string) {
+  public async GetById(@Res() response: Response, @Param('id') id: string) {
     const user = await this.usersService.findUserById(id);
     return response.status(HttpHelper.StatusCode(user.status)).json(user);
   }
@@ -49,7 +49,10 @@ export class UsersController {
   @ApiCreatedResponse({ type: Users })
   @ApiBadRequestResponse()
   @ApiInternalServerErrorResponse()
-  async Create(@Res() response: Response, @Body() userDTO: CreateUserDTO) {
+  public async Create(
+    @Res() response: Response,
+    @Body() userDTO: CreateUserDTO,
+  ) {
     const userCreated = await this.usersService.createUser(userDTO);
     return response
       .status(HttpHelper.StatusCode(userCreated.status))
@@ -61,7 +64,7 @@ export class UsersController {
   @ApiNotFoundResponse()
   @ApiBadRequestResponse()
   @ApiInternalServerErrorResponse()
-  async Update(
+  public async Update(
     @Res() response: Response,
     @Param('id') id: string,
     @Body() userDTO: UpdateUserDTO,
@@ -77,7 +80,7 @@ export class UsersController {
   @ApiNotFoundResponse()
   @ApiBadRequestResponse()
   @ApiInternalServerErrorResponse()
-  async Remove(@Res() response: Response, @Param('id') id: string) {
+  public async Remove(@Res() response: Response, @Param('id') id: string) {
     const userDeleted = await this.usersService.deleteUser(id);
     return response
       .status(HttpHelper.StatusCode(userDeleted.status))
