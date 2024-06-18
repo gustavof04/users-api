@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -17,5 +17,10 @@ async function bootstrap() {
 
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(3000);
+
+  const logger = new Logger('NestApplication');
+  const swaggerUsersUrl = `http://localhost:3000/api`;
+
+  logger.log(`Documentation available at ${swaggerUsersUrl}`);
 }
 bootstrap();
