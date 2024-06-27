@@ -1,6 +1,6 @@
-# Users API
+# Manaos Odyssey
 
-API de usuários em NestJS, TypeORM e Postgres.
+Plataforma de turismo e cultura local de Manaus.
 
 ## Arquitetura e Recursos
 * <a href="https://www.macoratti.net/21/05/net_onion1.htm" target="_blank">Onion Architecture</a> e injeção de dependência, garantindo modularidade, testabilidade e desacoplamento;
