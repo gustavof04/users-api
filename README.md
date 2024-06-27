@@ -1,6 +1,8 @@
 # Manaos Odyssey
 
-Plataforma de turismo e cultura local de Manaus.
+Plataforma de turismo e cultura local de Manaus. O projeto nasceu da ideia de facilitar a exploração de um patrimônio cultural e natural rico que é a capital do Amazonas, tanto para turistas quanto para moradores curiosos que queiram mais sobre a cidade.
+
+> Status do Projeto: 🚧 (em desenvolvimento)
 
 ## Arquitetura e Recursos
 * <a href="https://www.macoratti.net/21/05/net_onion1.htm" target="_blank">Onion Architecture</a> e injeção de dependência, garantindo modularidade, testabilidade e desacoplamento;
