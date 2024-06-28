@@ -1,6 +1,6 @@
 # Manaos Odyssey
 
-Plataforma de turismo e cultura local de Manaus. O projeto nasceu da ideia de facilitar a exploração de um patrimônio cultural e natural rico que é a capital do Amazonas, tanto para turistas quanto para moradores curiosos que queiram mais sobre a cidade.
+Plataforma de turismo e cultura local de Manaus. O projeto nasceu da ideia de facilitar a exploração do patrimônio cultural e natural rico que é a capital do Amazonas, tanto para turistas quanto para moradores curiosos que queiram mais sobre a cidade.
 
 > Status do Projeto: 🚧 (em desenvolvimento)
 
