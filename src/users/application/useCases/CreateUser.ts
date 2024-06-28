@@ -21,7 +21,7 @@ export class CreateUser implements ICreateUser {
         email: input.email,
       });
       if (existingUser) {
-        return Result.OperationalError(null, 'user.email.alreadyExists');
+        return Result.OperationalError(null, 'user.error.alreadyExists');
       }
 
       const createdUser = await this._usersRepository.save(input);

@@ -25,7 +25,15 @@ export class UpdateUser implements IUpdateUser {
         );
       }
 
+      const existingUser = await this._usersRepository.findOneBy({
+        email: input.email,
+      });
+
       const updatedUser = await this._usersRepository.findOneBy({ id });
+
+      if (existingUser) {
+        return Result.OperationalError(null, 'user.error.alreadyExists');
+      }
 
       if (!updatedUser) {
         return Result.NotFound(null, 'user.updated.error.notFound');
