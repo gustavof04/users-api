@@ -7,8 +7,8 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle('Users')
-    .setDescription('An simple API of Users.')
+    .setTitle('Manaos Odyssey')
+    .setDescription('Tourism and local culture platform API.')
     .setVersion('1.0')
     .build();
 
